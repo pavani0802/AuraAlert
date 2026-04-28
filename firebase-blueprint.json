@@ -1,0 +1,88 @@
+{
+  "entities": {
+    "MissingPerson": {
+      "title": "Missing Person",
+      "description": "Records of missing individuals",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "age": { "type": "number" },
+        "gender": { "type": "string" },
+        "physicalDescription": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "faceDescriptor": { "type": "array", "description": "JSON string of float32 array" },
+        "lastSeenLocation": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" },
+            "address": { "type": "string" }
+          }
+        },
+        "status": { "type": "string", "enum": ["Active", "Found", "Closed"] },
+        "reporterId": { "type": "string" },
+        "reporterContact": { "type": "string" },
+        "caseNumber": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "status", "reporterId", "lastSeenLocation"]
+    },
+    "Sighting": {
+      "title": "Sighting Report",
+      "description": "Reports of potential sightings of missing persons",
+      "type": "object",
+      "properties": {
+        "personId": { "type": "string" },
+        "reporterId": { "type": "string" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" },
+            "address": { "type": "string" }
+          }
+        },
+        "notes": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "matchConfidence": { "type": "number" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["personId", "location", "timestamp"]
+    },
+    "User": {
+      "title": "App User",
+      "description": "Profile information for volunteers and authorities",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["Volunteer", "Police", "Admin"] },
+        "lastKnownLocation": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        },
+        "notificationEnabled": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/missing_persons/{personId}": {
+      "schema": "MissingPerson",
+      "description": "Collection of missing person cases"
+    },
+    "/missing_persons/{personId}/sightings/{sightingId}": {
+      "schema": "Sighting",
+      "description": "Sightings for a specific missing person"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    }
+  }
+}

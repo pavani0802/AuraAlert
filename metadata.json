@@ -1,0 +1,13 @@
+{
+  "name": "AuraAlert: AI Missing Person Smart Alert System",
+  "description": "An AI-powered emergency response platform for finding missing persons using facial recognition, geo-fenced alerts, and real-time volunteer coordination.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "facial_recognition",
+    "realtime_maps",
+    "emergency_alerts"
+  ]
+}
